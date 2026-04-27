@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
   "schema_version": "1.0.0",
-  "last_updated": "2026-04-26",
+  "last_updated": "2026-04-27",
   "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Today's preset values translated 1:1 from presets.py; AEW split into aew_fixpreis (≤30 kW fixed) and aew_rmp (RMP) per Option A (multi-product utility = separate dropdown entries).",
   "federal_minimum": [
     {
@@ -375,15 +375,25 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.ewz.ch/de/private/solaranlagen/verrechnungsloesungen/stromruecklieferung.html",
+          "tarif_url": "https://www.ewz.ch/dam/ewz/meinewz/Dokumentencenter/verguetung-stromruecklieferung-eea-tarif-zh-gr-DE.pdf",
           "power_tiers": [
             {
-              "kw_min": 0,
-              "kw_max": null,
-              "base_model": "fixed_flat",
+              "kw_min": 0.0,
+              "kw_max": 3000.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin",
               "fixed_rp_kwh": 7.91,
-              "hkn_rp_kwh": 5.0,
-              "hkn_structure": "additive_optin"
+              "fixed_ht_rp_kwh": 10.5,
+              "fixed_nt_rp_kwh": 6.45,
+              "ht_window": {
+                "mofr": [
+                  6,
+                  22
+                ],
+                "sa": null,
+                "su": null
+              }
             }
           ],
           "hkn_switch_cadence": "annual",
