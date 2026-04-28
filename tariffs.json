@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
-  "schema_version": "1.0.0",
-  "last_updated": "2026-04-27",
-  "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Today's preset values translated 1:1 from presets.py; AEW split into aew_fixpreis (≤30 kW fixed) and aew_rmp (RMP) per Option A (multi-product utility = separate dropdown entries).",
+  "schema_version": "1.1.0",
+  "last_updated": "2026-04-28",
+  "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Schema 1.1.0 (Batch D) introduces user_inputs[] for parallel tariff variants (replaces the AEW two-entry hack), power_tier.hkn_cases[] for conditional HKN values, and bonuses[].kind/when for additive vs. multiplicative bonuses.",
   "federal_minimum": [
     {
       "valid_from": "2026-01-01",
@@ -458,26 +458,56 @@
         }
       ]
     },
-    "aew_fixpreis": {
+    "aew": {
       "nr_elcom": null,
       "uid": null,
-      "name_de": "AEW Energie — Rücklieferung Fixpreis",
-      "name_fr": "AEW Energie — Rétrocédage prix fixe",
+      "name_de": "AEW Energie",
+      "name_fr": "AEW Energie",
       "homepage": "https://www.aew.ch",
       "rates": [
         {
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Fixpreis_2026.pdf",
+          "tarif_url": "https://www.aew.ch/privatkunden/strom/strom-produzieren/solarstrom-einspeisen",
+          "user_inputs": [
+            {
+              "key": "tariff_model",
+              "type": "enum",
+              "values": ["fixpreis", "rmp"],
+              "default": "fixpreis",
+              "label_de": "Tarifmodell",
+              "label_fr": "Modèle tarifaire",
+              "label_en": "Tariff model",
+              "description_de": "Wahl zwischen Fixpreis (8.20 Rp/kWh, HKN-Übertragung erforderlich, Anlage muss naturemade-star-zertifizierbar sein) und Referenzmarktpreis (quartalsweiser BFE-RMP, ohne HKN). Wählbar nur für Anlagen 2–30 kW; ab 30 kW gilt automatisch RMP.",
+              "description_fr": "Choix entre Prix fixe (8.20 ct/kWh, transfert HKN requis, installation certifiable naturemade-star) et Prix de marché de référence (PMR trimestriel OFEN, sans HKN). Choix possible uniquement pour 2–30 kW; au-delà, PMR automatique.",
+              "description_en": "Choice between Fixed price (8.20 Rp/kWh, HKN transfer required, installation must be naturemade-star-certifiable) and Reference market price (quarterly SFOE RMP, no HKN). Selectable only for 2–30 kW; ≥30 kW is automatically RMP."
+            }
+          ],
           "power_tiers": [
             {
-              "kw_min": 0,
+              "applies_when": { "tariff_model": "fixpreis" },
+              "kw_min": 2,
               "kw_max": 30,
               "base_model": "fixed_flat",
               "fixed_rp_kwh": 8.2,
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "bundled"
+            },
+            {
+              "applies_when": { "tariff_model": "rmp" },
+              "kw_min": 2,
+              "kw_max": 30,
+              "base_model": "rmp_quartal",
+              "hkn_rp_kwh": 0.0,
+              "hkn_structure": "none"
+            },
+            {
+              "kw_min": 30,
+              "kw_max": null,
+              "base_model": "rmp_quartal",
+              "hkn_rp_kwh": 0.0,
+              "hkn_structure": "none"
             }
           ],
           "price_floor_rp_kwh": null,
@@ -485,9 +515,17 @@
             {
               "severity": "warning",
               "text": {
-                "de": "AEW vergütet den Fixpreis-Tarif nur für naturemade-star-zertifizierte Anlagen (Selbstdeklaration durch den Anlagebetreiber). Ohne Zertifizierung gilt der Referenzmarktpreis-Tarif.",
-                "en": "AEW pays the fixed-price tariff only for naturemade-star-certified installations (self-declaration by the plant operator). Without certification the reference-market-price tariff applies.",
-                "fr": "AEW n'applique le tarif au prix fixe qu'aux installations certifiées naturemade-star (déclaration sur l'honneur de l'exploitant). Sans certification, le tarif au prix de référence du marché s'applique."
+                "de": "Fixpreis-Tarif setzt voraus, dass die Anlage naturemade-star-zertifiziert oder zertifizierbar ist (Selbstdeklaration durch den Anlagebetreiber) und die HKN per Dauerauftrag an AEW übertragen werden. Ohne Erfüllung dieser Voraussetzungen ist nur der RMP-Tarif zulässig.",
+                "en": "The Fixpreis tariff requires the installation to be naturemade-star-certified or certifiable (self-declaration by the plant operator) and HKN transferred to AEW via standing order. Without these conditions, only the RMP tariff applies.",
+                "fr": "Le tarif Prix fixe exige que l'installation soit certifiée ou certifiable naturemade-star (déclaration sur l'honneur de l'exploitant) et que les HKN soient transférés à AEW par ordre permanent. Sans ces conditions, seul le tarif PMR s'applique."
+              }
+            },
+            {
+              "severity": "info",
+              "text": {
+                "de": "Wechsel zwischen Fixpreis und RMP nur zu definierten Eintrittsterminen möglich (1.1., 1.4., 1.7., 1.10. — Anmeldung jeweils ca. 6 Wochen vorher).",
+                "en": "Switch between Fixpreis and RMP only at defined entry dates (Jan 1, Apr 1, Jul 1, Oct 1 — registration ~6 weeks beforehand).",
+                "fr": "Changement entre Prix fixe et PMR uniquement à des dates d'entrée définies (1.1., 1.4., 1.7., 1.10. — inscription environ 6 semaines auparavant)."
               }
             }
           ],
@@ -498,30 +536,223 @@
         }
       ]
     },
-    "aew_rmp": {
+    "dkek_ebnat_kappel": {
       "nr_elcom": null,
       "uid": null,
-      "name_de": "AEW Energie — Rücklieferung Referenzmarktpreis",
-      "name_fr": "AEW Energie — Rétrocédage prix de marché de référence",
-      "homepage": "https://www.aew.ch",
+      "name_de": "Dorfkorporation Ebnat-Kappel (DKEK)",
+      "name_fr": "Dorfkorporation Ebnat-Kappel (DKEK)",
+      "homepage": "https://www.dkek.ch",
       "rates": [
         {
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Referenzmarktpreis_2026.pdf",
+          "tarif_url": "https://www.dkek.ch/_docn/171962/Strom_R%C3%BCckliefertarife_ab_01.01.2026.pdf",
+          "user_inputs": [
+            {
+              "key": "supply_product",
+              "type": "boolean",
+              "default": false,
+              "label_de": "Bezug Ökostrom-Produkt «Ebnat-Kappler-Solar 10 % / 40 %»",
+              "label_en": "Supply contract for «Ebnat-Kappler-Solar 10 % / 40 %» eco-electricity product",
+              "description_de": "HKN-Vergütung erfolgt nur bei gleichzeitigem Bezug eines Ökostrom-Produkts der DKEK («Ebnat-Kappler-Solar 10 %» oder «40 %»). Beide Produktstufen ergeben den gleichen HKN-Vergütungssatz (die 10 % / 40 % unterscheiden sich nur im Aufschlag auf den Energiebezug, nicht in der Einspeise-HKN).",
+              "description_en": "HKN compensation is paid only if you also purchase a DKEK eco-electricity product («Ebnat-Kappler-Solar 10 %» or «40 %»). Both tiers yield the same HKN rate (the 10 % / 40 % difference only affects the consumption surcharge, not the feed-in HKN)."
+            }
+          ],
           "power_tiers": [
             {
-              "kw_min": 0,
-              "kw_max": null,
+              "kw_min": 2,
+              "kw_max": 30,
               "base_model": "rmp_quartal",
               "hkn_rp_kwh": 0.0,
-              "hkn_structure": "none"
+              "hkn_structure": "additive_optin",
+              "hkn_cases": [
+                {
+                  "when": { "season": "winter", "user_inputs": { "supply_product": true } },
+                  "rp_kwh": 2.0,
+                  "note": "Winterhalbjahr Okt–März, Bezug EK-Solar"
+                },
+                {
+                  "when": { "season": "summer", "user_inputs": { "supply_product": true } },
+                  "rp_kwh": 1.0,
+                  "note": "Sommerhalbjahr Apr–Sep, Bezug EK-Solar"
+                }
+              ]
             }
           ],
           "price_floor_rp_kwh": null,
+          "seasonal": {
+            "summer_months": [4, 5, 6, 7, 8, 9],
+            "winter_months": [10, 11, 12, 1, 2, 3]
+          },
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "PV-Anlagen >30 kVA: HKN nur «nach Absprache» mit der DKEK (separate Vereinbarung). Sätze gemäss Tarifblatt: mit EK-Solar 2.0 (Winter) / 1.0 (Sommer); ohne EK-Solar 1.0 (Winter) / 0.3 (Sommer). Nicht im Schema abgebildet — bei Bedarf direkt mit DKEK klären.",
+                "en": "PV systems >30 kVA: HKN only «by arrangement» with DKEK (separate contract). Per Tarifblatt: with EK-Solar 2.0 winter / 1.0 summer; without EK-Solar 1.0 winter / 0.3 summer. Not encoded in the schema — contact DKEK directly if applicable."
+              }
+            },
+            {
+              "severity": "info",
+              "text": {
+                "de": "Anlagen-Voraussetzungen: max. 30 kWp installiert, Pronovo-registriert, nicht freistehend, nicht in EVS/KEV/MKF.",
+                "en": "Eligibility: max. 30 kWp installed, Pronovo-registered, not free-standing, not in EVS/KEV/MKF."
+              }
+            }
+          ],
+          "bonuses": [],
+          "cap_mode": false,
+          "cap_rules": null
+        }
+      ]
+    },
+    "ewn_nidwalden": {
+      "nr_elcom": null,
+      "uid": null,
+      "name_de": "EWN — Kantonales Elektrizitätswerk Nidwalden",
+      "name_fr": "EWN — Service cantonal de l'électricité de Nidwald",
+      "homepage": "https://www.ewn.ch",
+      "rates": [
+        {
+          "valid_from": "2026-01-01",
+          "valid_to": null,
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.ewn.ch/wp-content/uploads/2026/01/20260123_Vorl_Produktblatt_Einspeiseverguetung_web.pdf",
+          "user_inputs": [
+            {
+              "key": "supply_product",
+              "type": "boolean",
+              "default": false,
+              "label_de": "Bezug «SonnenStrom» für gesamten Reststrombedarf",
+              "label_en": "«SonnenStrom» supply contract covering entire residual demand",
+              "description_de": "Erhöht die HKN-Vergütung von 2.0 auf 4.0 Rp/kWh, sofern der gesamte Reststrombedarf der Anlage mit dem EWN-Produkt «SonnenStrom» gedeckt wird (vor 2026: Produkt hiess «EWNSonne»). Teilweise Deckung qualifiziert nicht.",
+              "description_en": "Raises HKN compensation from 2.0 to 4.0 Rp/kWh provided the plant's entire residual demand is covered by EWN's «SonnenStrom» supply product (before 2026 the product was called «EWNSonne»). Partial coverage does not qualify."
+            }
+          ],
+          "power_tiers": [
+            {
+              "kw_min": 0,
+              "kw_max": 150,
+              "base_model": "rmp_quartal",
+              "hkn_rp_kwh": 2.0,
+              "hkn_structure": "additive_optin",
+              "hkn_cases": [
+                {
+                  "when": { "user_inputs": { "supply_product": true } },
+                  "rp_kwh": 4.0,
+                  "note": "Voller Reststrombedarf mit SonnenStrom gedeckt"
+                }
+              ]
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "notes": [
+            {
+              "severity": "warning",
+              "text": {
+                "de": "Jährliche HKN-Auszahlungs-Obergrenze CHF 2'800.00 exkl. MWSt pro Anlage und Produzent. Sobald die kumulierte HKN-Vergütung im Kalenderjahr CHF 2'800 erreicht, werden weitere HKN nicht mehr vergütet. Im aktuellen Schema nicht modelliert — Integration sollte die Grenze überwachen.",
+                "en": "Annual HKN payout cap CHF 2'800.00 excl. VAT per installation and producer. Once cumulative HKN compensation reaches CHF 2'800 in a calendar year, further HKN is not paid. Not modeled in the current schema — the integration should track the cap."
+              }
+            },
+            {
+              "severity": "info",
+              "text": {
+                "de": "Produkt «SonnenStrom» hiess vor 2026 «EWNSonne» — bestehende Verträge wurden umbenannt, Bedingungen unverändert.",
+                "en": "The «SonnenStrom» product was called «EWNSonne» before 2026 — existing contracts were renamed, conditions unchanged."
+              }
+            },
+            {
+              "severity": "info",
+              "text": {
+                "de": "PV-Anlagen >150 kW sind im Produktblatt 2026 nicht aufgeführt — HKN-Vergütung in dieser Grössenklasse wäre Einzelfall, hier nicht abgebildet.",
+                "en": "PV systems >150 kW are not enumerated in the 2026 Produktblatt — HKN compensation at that size would be case-by-case, not encoded here."
+              }
+            },
+            {
+              "severity": "info",
+              "text": {
+                "de": "Voraussetzung HKN-Abnahme: gültiger Abnahmevertrag mit EWN, keine KEV/Pronovo-Subventionierung. Ohne Überschussmessung werden vom HKN 25 % für Eigenverbrauch abgezogen.",
+                "en": "HKN take-off requires a valid supply contract with EWN and no KEV/Pronovo subsidy. Without surplus metering, 25 % is deducted from HKN for self-consumption."
+              }
+            }
+          ],
           "bonuses": [],
           "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null
+        }
+      ]
+    },
+    "regio_energie_solothurn": {
+      "nr_elcom": null,
+      "uid": null,
+      "name_de": "Regio Energie Solothurn",
+      "name_fr": "Regio Energie Solothurn",
+      "homepage": "https://www.regioenergie.ch",
+      "rates": [
+        {
+          "valid_from": "2026-01-01",
+          "valid_to": null,
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.regioenergie.ch/de/download/verguetung-fuer-die-energieeinspeisung-2026/",
+          "power_tiers": [
+            {
+              "kw_min": 0,
+              "kw_max": 30,
+              "base_model": "fixed_flat",
+              "fixed_rp_kwh": 7.6,
+              "hkn_rp_kwh": 4.0,
+              "hkn_structure": "additive_optin"
+            },
+            {
+              "kw_min": 30,
+              "kw_max": 100,
+              "base_model": "fixed_flat",
+              "fixed_rp_kwh": 7.6,
+              "hkn_rp_kwh": 1.0,
+              "hkn_structure": "additive_optin"
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "seasonal": {
+            "summer_months": [4, 5, 6, 7, 8, 9],
+            "winter_months": [10, 11, 12, 1, 2, 3],
+            "summer_rp_kwh": 6.20,
+            "winter_rp_kwh": 9.00
+          },
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Standardtarif (fixed_flat saisonal): Sommer 6.20 Rp/kWh, Winter 9.00 Rp/kWh. Jahresmittel 7.60 Rp/kWh als fixed_rp_kwh-Fallback. Sommer = April–September; Winter = Oktober–März.",
+                "en": "Standard tariff (fixed_flat seasonal): Summer 6.20 Rp/kWh, Winter 9.00 Rp/kWh. Yearly mean 7.60 Rp/kWh as fixed_rp_kwh fallback. Summer = Apr–Sep; Winter = Oct–Mar."
+              }
+            },
+            {
+              "severity": "info",
+              "text": {
+                "de": "Anlagen >100 kWp: differenzierte Tarife je nach Eigenverbrauch (4.00 vs. 6.20 Rp/kWh im Sommer, 100–150 kWp). Im Schema 1.1.0 noch nicht abgebildet (kein power_tier.self_consumption-Axis); bei Bedarf direkt am Tarifblatt prüfen.",
+                "en": "Systems >100 kWp: tariffs differ by self-consumption (4.00 vs. 6.20 Rp/kWh in summer, 100–150 kWp range). Not yet modeled in schema 1.1.0 (no power_tier.self_consumption axis); check the Tarifblatt directly if applicable."
+              }
+            },
+            {
+              "severity": "info",
+              "text": {
+                "de": "Alternative zum Standardtarif: vierteljährlich gemittelter Marktpreis (BFE-RMP gemäss Art. 15 EnFV). Wahl einmal jährlich zum Abrechnungsperiodenende. Im Schema nicht als user_input modelliert — Standardtarif ist die Default-Konfiguration.",
+                "en": "Alternative to the Standardtarif: quarterly mean market price (SFOE RMP per Art. 15 EnFV). Choice once yearly at end of billing period. Not modeled as user_input here — Standardtarif is the default."
+              }
+            }
+          ],
+          "bonuses": [
+            {
+              "kind": "multiplier_pct",
+              "name": "Wahltarif TOP-40",
+              "multiplier_pct": 8.0,
+              "applies_when": "opt_in",
+              "note": "+8 % auf die gesamte ins Netz eingespeiste Energie. Voraussetzung: dauerhafte Begrenzung der Einspeiseleistung am Netzanschlusspunkt auf 60 % der DC-Maximalleistung der Anlage; DC-Leistung > 3.7 kWp; Pronovo-Zertifizierung. Inbetriebnahme jeweils zum nächsten Quartal."
+            }
+          ],
           "cap_mode": false,
           "cap_rules": null
         }

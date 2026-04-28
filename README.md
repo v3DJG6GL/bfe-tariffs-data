@@ -37,8 +37,10 @@ violation). Manual refresh: `bfe_rueckliefertarif.refresh_tariffs` service.
 3. Bump `last_updated` to today's ISO date.
 4. Validate locally:
    ```
-   python3 -c "import json,jsonschema; jsonschema.Draft202012Validator(json.load(open('schemas/tariffs-v1.schema.json'))).validate(json.load(open('tariffs.json')))"
+   python3 scripts/validate.py        # validates tariffs.json against the schema
+   python3 scripts/test_schema.py     # runs schema $def regression tests
    ```
+   Both scripts require `jsonschema>=4.18` and exit non-zero on failure.
 5. Open a PR.
 
 ## Sources
