@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
   "schema_version": "1.1.0",
-  "last_updated": "2026-04-28",
+  "last_updated": "2026-04-30",
   "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Schema 1.1.0 (Batch D) introduces user_inputs[] for parallel tariff variants (replaces the AEW two-entry hack), power_tier.hkn_cases[] for conditional HKN values, and bonuses[].kind/when for additive vs. multiplicative bonuses.",
   "federal_minimum": [
     {
@@ -459,89 +459,504 @@
       ]
     },
     "aew": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "5",
       "name_de": "AEW Energie",
       "name_fr": "AEW Energie",
       "homepage": "https://www.aew.ch",
       "rates": [
         {
-          "valid_from": "2026-01-01",
-          "valid_to": null,
+          "valid_from": "2017-01-01",
+          "valid_to": "2018-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/privatkunden/strom/strom-produzieren/solarstrom-einspeisen",
-          "user_inputs": [
-            {
-              "key": "tariff_model",
-              "type": "enum",
-              "values": [
-                "fixpreis",
-                "rmp"
-              ],
-              "default": "fixpreis",
-              "label_de": "Tarifmodell",
-              "label_fr": "Modèle tarifaire",
-              "label_en": "Tariff model",
-              "description_de": "Wahl zwischen Fixpreis (8.20 Rp/kWh, HKN-Übertragung erforderlich, Anlage muss naturemade-star-zertifizierbar sein) und Referenzmarktpreis (quartalsweiser BFE-RMP, ohne HKN). Wählbar nur für Anlagen 2–30 kW; ab 30 kW gilt automatisch RMP.",
-              "description_fr": "Choix entre Prix fixe (8.20 ct/kWh, transfert HKN requis, installation certifiable naturemade-star) et Prix de marché de référence (PMR trimestriel OFEN, sans HKN). Choix possible uniquement pour 2–30 kW; au-delà, PMR automatique.",
-              "description_en": "Choice between Fixed price (8.20 Rp/kWh, HKN transfer required, installation must be naturemade-star-certifiable) and Reference market price (quarterly SFOE RMP, no HKN). Selectable only for 2–30 kW; ≥30 kW is automatically RMP."
-            }
-          ],
+          "tarif_url": "http://www.aew.ch/content/dam/aew/downloads/strom/produkte-2017/AEW-messung.pdf.res/AEW-messung.pdf",
           "power_tiers": [
             {
-              "applies_when": {
-                "tariff_model": "fixpreis"
-              },
-              "kw_min": 2,
-              "kw_max": 30,
-              "base_model": "fixed_flat",
-              "fixed_rp_kwh": 8.2,
-              "hkn_rp_kwh": 0.0,
-              "hkn_structure": "bundled"
+              "kw_min": 0.0,
+              "kw_max": 100.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 6.2,
+              "fixed_nt_rp_kwh": 4.45,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Die AEW Energie AG bietet für die Verwertung des HKN's den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
+              }
+            }
+          ],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2018-01-01",
+          "valid_to": "2019-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2018/aew-messung-2018.pdf.res/aew-messung-2018.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 100.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 5.43,
+              "fixed_nt_rp_kwh": 3.73,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Die AEW Energie AG bietet für die Verwertung des HKN\\'s den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
+              }
+            }
+          ],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2019-01-01",
+          "valid_to": "2020-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2019/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf.res/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 100.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 6.25,
+              "fixed_nt_rp_kwh": 4.55,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Die AEW Energie AG bietet für die Verwertung des HKNs den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
+              }
+            }
+          ],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2020-01-01",
+          "valid_to": "2021-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2019-08/aew-p-e-en-aew-verguetung-fuer-produzenten-2020.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 3000.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 7.2,
+              "fixed_nt_rp_kwh": 5.6,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2021-01-01",
+          "valid_to": "2022-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2020-08/aew-p-e-en-hkn-aew-verguetung-fuer-produzenten-2021_1.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 30.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin",
+              "fixed_ht_rp_kwh": 6.75,
+              "fixed_nt_rp_kwh": 5.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             },
             {
-              "applies_when": {
-                "tariff_model": "rmp"
-              },
-              "kw_min": 2,
-              "kw_max": 30,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 0.0,
-              "hkn_structure": "none"
+              "kw_min": 30.0,
+              "kw_max": 3000.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 6.75,
+              "fixed_nt_rp_kwh": 5.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Neu: ab dem 1.1.2021 übernimmt die AEW den HKN für alle Anlagen < 30 kVA zu 3 Rp/kWh."
+              }
+            }
+          ],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2022-01-01",
+          "valid_to": "2023-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2021-08/AEW_p_e_en_HKN_2022.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 30.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin",
+              "fixed_ht_rp_kwh": 7.1,
+              "fixed_nt_rp_kwh": 5.95,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             },
             {
-              "kw_min": 30,
+              "kw_min": 30.0,
+              "kw_max": 3000.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 7.1,
+              "fixed_nt_rp_kwh": 5.95,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2023-01-01",
+          "valid_to": "2024-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2022-08/AEW_Ruecklieferung_Herkunftsnachweis_2023.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 30.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin",
+              "fixed_ht_rp_kwh": 9.15,
+              "fixed_nt_rp_kwh": 7.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            },
+            {
+              "kw_min": 30.0,
+              "kw_max": 3000.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 9.15,
+              "fixed_nt_rp_kwh": 7.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2024-01-01",
+          "valid_to": "2025-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2023-08/AEW_Ruecklieferung_Herkunftsnachweis_2024.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 30.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin",
+              "fixed_ht_rp_kwh": 15.25,
+              "fixed_nt_rp_kwh": 13.3,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            },
+            {
+              "kw_min": 30.0,
               "kw_max": null,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 0.0,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 15.25,
+              "fixed_nt_rp_kwh": 13.3,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2025-01-01",
+          "valid_to": "2026-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2024-08/AEW_Ruecklieferung_2025.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 30.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin",
+              "fixed_ht_rp_kwh": 8.15,
+              "fixed_nt_rp_kwh": 6.0,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            },
+            {
+              "kw_min": 30.0,
+              "kw_max": 3000.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": null,
+              "hkn_structure": "none",
+              "fixed_ht_rp_kwh": 8.15,
+              "fixed_nt_rp_kwh": 6.0,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            }
+          ],
+          "price_floor_rp_kwh": null,
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
+        },
+        {
+          "valid_from": "2026-01-01",
+          "valid_to": "2027-01-01",
+          "settlement_period": "quartal",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Fixpreis_2026.pdf",
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 30.0,
+              "base_model": "fixed_flat",
+              "hkn_rp_kwh": 0.0,
+              "hkn_structure": "bundled",
+              "fixed_rp_kwh": 8.2
+            },
+            {
+              "kw_min": 30.0,
+              "kw_max": 3000.0,
               "base_model": "rmp_quartal",
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "none"
             }
           ],
           "price_floor_rp_kwh": null,
-          "notes": [
-            {
-              "severity": "warning",
-              "text": {
-                "de": "Fixpreis-Tarif setzt voraus, dass die Anlage naturemade-star-zertifiziert oder zertifizierbar ist (Selbstdeklaration durch den Anlagebetreiber) und die HKN per Dauerauftrag an AEW übertragen werden. Ohne Erfüllung dieser Voraussetzungen ist nur der RMP-Tarif zulässig.",
-                "en": "The Fixpreis tariff requires the installation to be naturemade-star-certified or certifiable (self-declaration by the plant operator) and HKN transferred to AEW via standing order. Without these conditions, only the RMP tariff applies.",
-                "fr": "Le tarif Prix fixe exige que l'installation soit certifiée ou certifiable naturemade-star (déclaration sur l'honneur de l'exploitant) et que les HKN soient transférés à AEW par ordre permanent. Sans ces conditions, seul le tarif PMR s'applique."
-              }
-            },
-            {
-              "severity": "info",
-              "text": {
-                "de": "Wechsel zwischen Fixpreis und RMP nur zu definierten Eintrittsterminen möglich (1.1., 1.4., 1.7., 1.10. — Anmeldung jeweils ca. 6 Wochen vorher).",
-                "en": "Switch between Fixpreis and RMP only at defined entry dates (Jan 1, Apr 1, Jul 1, Oct 1 — registration ~6 weeks beforehand).",
-                "fr": "Changement entre Prix fixe et PMR uniquement à des dates d'entrée définies (1.1., 1.4., 1.7., 1.10. — inscription environ 6 semaines auparavant)."
-              }
-            }
-          ],
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Fixvergütung bis 30 kW beinhaltet  die Abhgabe des HKNs. Ab 30 kW Vergütung zum BFE-Marktpreis, ohne HKN-Abnahme."
+              }
+            }
+          ],
+          "user_inputs": [
+            {
+              "key": "aew_fixpreis_rmp",
+              "type": "enum",
+              "default": "AEW Fixpreis",
+              "label_de": "AEW Fixpreis/ Referenzmarktpreis",
+              "values": [
+                "AEW Fixpreis",
+                "Referenzmarktpreis"
+              ]
+            }
+          ]
         }
-      ]
+      ],
+      "uid": "CHE-105.981.944"
     },
     "dkek_ebnat_kappel": {
       "nr_elcom": null,
@@ -807,280 +1222,449 @@
         }
       ]
     },
-    "age_saasdsadsadsad": {
-      "name_de": "Acqua Gas Elettricità SA Chiasso",
-      "homepage": "https://www.age-sa.ch/",
+    "sasads": {
+      "name_de": "AEW Energie AG",
+      "homepage": "https://www.aew.ch",
       "rates": [
         {
           "valid_from": "2017-01-01",
           "valid_to": "2018-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "http://www.age-sa.ch/sites/default/files/files/contenuti/Immissione%20in%20rete%20di%20elettricit%C3%A0%20prodotta%20da%20fonti%20rinnovabili%20ER1%20-%202016.pdf",
+          "tarif_url": "http://www.aew.ch/content/dam/aew/downloads/strom/produkte-2017/AEW-messung.pdf.res/AEW-messung.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 20.0,
-              "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 9.0
-            },
-            {
-              "kw_min": 30.0,
-              "kw_max": 10000.0,
-              "base_model": "fixed_flat",
+              "kw_max": 100.0,
+              "base_model": "fixed_ht_nt",
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 8.34
+              "fixed_ht_rp_kwh": 6.2,
+              "fixed_nt_rp_kwh": 4.45,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Die AEW Energie AG bietet für die Verwertung des HKN's den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
+              }
+            }
+          ],
+          "user_inputs": []
         },
         {
           "valid_from": "2018-01-01",
           "valid_to": "2019-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "http://www.age-sa.ch/sites/default/files/files/contenuti/4%20Immissione%20in%20rete%20di%20elettricita%CC%80%20prodotta%20da%20fonti%20rinnovabili.pdf",
+          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2018/aew-messung-2018.pdf.res/aew-messung-2018.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 5.0,
-              "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.77
-            },
-            {
-              "kw_min": 30.0,
-              "kw_max": 10000.0,
-              "base_model": "fixed_flat",
+              "kw_max": 100.0,
+              "base_model": "fixed_ht_nt",
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.77
+              "fixed_ht_rp_kwh": 5.43,
+              "fixed_nt_rp_kwh": 3.73,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Die AEW Energie AG bietet für die Verwertung des HKN\\'s den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
+              }
+            }
+          ],
+          "user_inputs": []
         },
         {
           "valid_from": "2019-01-01",
           "valid_to": "2020-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "http://www.age-sa.ch/sites/default/files/files/contenuti/Immissione%20in%20rete%20di%20elettricita%CC%80%20prodotta%20da%20fonti%20rinnovabili%202019.pdf",
+          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2019/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf.res/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
-              "kw_max": 10000.0,
-              "base_model": "fixed_flat",
+              "kw_max": 100.0,
+              "base_model": "fixed_ht_nt",
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.88
+              "fixed_ht_rp_kwh": 6.25,
+              "fixed_nt_rp_kwh": 4.55,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Die AEW Energie AG bietet für die Verwertung des HKNs den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
+              }
+            }
+          ],
+          "user_inputs": []
         },
         {
           "valid_from": "2020-01-01",
           "valid_to": "2021-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2019-08/aew-p-e-en-aew-verguetung-fuer-produzenten-2020.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
-              "kw_max": 10000.0,
-              "base_model": "fixed_flat",
+              "kw_max": 100.0,
+              "base_model": "fixed_ht_nt",
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.88
+              "fixed_ht_rp_kwh": 7.2,
+              "fixed_nt_rp_kwh": 5.6,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
         },
         {
           "valid_from": "2021-01-01",
           "valid_to": "2022-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://age-sa.ch/wp-content/uploads/2021/02/Immissione-in-rete-di-elettricita-prodotta-da-fonti-rinnovabili-2019.pdf",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2020-08/aew-p-e-en-hkn-aew-verguetung-fuer-produzenten-2021_1.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
+              "kw_max": 30.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin",
+              "fixed_ht_rp_kwh": 6.75,
+              "fixed_nt_rp_kwh": 5.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
+            },
+            {
+              "kw_min": 30.0,
               "kw_max": 3000.0,
-              "base_model": "fixed_flat",
+              "base_model": "fixed_ht_nt",
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.88
+              "fixed_ht_rp_kwh": 6.75,
+              "fixed_nt_rp_kwh": 5.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Neu: ab dem 1.1.2021 übernimmt die AEW den HKN für alle Anlagen < 30 kVA zu 3 Rp/kWh."
+              }
+            }
+          ],
+          "user_inputs": []
         },
         {
           "valid_from": "2022-01-01",
           "valid_to": "2023-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://age-sa.ch/wp-content/uploads/2021/08/Immissione-in-rete-di-elettricita-prodotta-da-fonti-rinn-ovabili-2022.pdf",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2021-08/AEW_p_e_en_HKN_2022.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
               "kw_max": 30.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 4.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.0
+              "fixed_ht_rp_kwh": 7.1,
+              "fixed_nt_rp_kwh": 5.95,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             },
             {
               "kw_min": 30.0,
               "kw_max": 3000.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 3.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.0
+              "fixed_ht_rp_kwh": 7.1,
+              "fixed_nt_rp_kwh": 5.95,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
         },
         {
           "valid_from": "2023-01-01",
           "valid_to": "2024-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://age-sa.ch/wp-content/uploads/2022/08/immissione-in-rete-di-elettricita-prodotta-da-fonti-rinnovabili-2023.pdf",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2022-08/AEW_Ruecklieferung_Herkunftsnachweis_2023.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
               "kw_max": 30.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 4.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 3.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.0
+              "fixed_ht_rp_kwh": 9.15,
+              "fixed_nt_rp_kwh": 7.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             },
             {
               "kw_min": 30.0,
               "kw_max": 3000.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 3.0,
+              "base_model": "fixed_ht_nt",
+              "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 7.0
+              "fixed_ht_rp_kwh": 9.15,
+              "fixed_nt_rp_kwh": 7.4,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
         },
         {
           "valid_from": "2024-01-01",
           "valid_to": "2025-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://age-sa.ch/wp-content/uploads/2023/12/Immissione-in-rete-di-elettricita-prodotta-da-fonti-rinnovabili-2024.pdf",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2023-08/AEW_Ruecklieferung_Herkunftsnachweis_2024.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 4.0,
-              "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 8.0
-            },
-            {
-              "kw_min": 30.0,
               "kw_max": 3000.0,
-              "base_model": "fixed_flat",
+              "base_model": "fixed_ht_nt",
               "hkn_rp_kwh": 3.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 8.0
+              "fixed_ht_rp_kwh": 15.25,
+              "fixed_nt_rp_kwh": 13.3,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": [
+                  7,
+                  13
+                ],
+                "su": null
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
         },
         {
           "valid_from": "2025-01-01",
           "valid_to": "2026-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://age-sa.ch/wp-content/uploads/2023/12/Immissione-in-rete-di-elettricita-prodotta-da-fonti-rinnovabili-2024.pdf",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2024-08/AEW_Ruecklieferung_2025.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
               "kw_max": 30.0,
               "base_model": "fixed_flat",
-              "hkn_rp_kwh": 4.0,
+              "hkn_rp_kwh": 3.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 8.0
+              "fixed_rp_kwh": 7.67
             },
             {
               "kw_min": 30.0,
               "kw_max": 3000.0,
               "base_model": "fixed_flat",
-              "hkn_rp_kwh": 3.0,
+              "hkn_rp_kwh": 0.0,
               "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 8.0
+              "fixed_rp_kwh": 7.67
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [],
+          "user_inputs": []
         },
         {
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://age-sa.ch/wp-content/uploads/2025/10/Immissione-in-rete-di-elettricita-prodotta-da-fonti-rinnovabili-2024.pdf",
+          "tarif_url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Fixpreis_2026.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
               "kw_max": 30.0,
               "base_model": "fixed_flat",
-              "hkn_rp_kwh": 4.0,
-              "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 8.0
+              "hkn_rp_kwh": 0.0,
+              "hkn_structure": "bundled",
+              "fixed_rp_kwh": 8.2
             },
             {
               "kw_min": 30.0,
               "kw_max": 3000.0,
-              "base_model": "fixed_flat",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin",
-              "fixed_rp_kwh": 8.0
+              "base_model": "rmp_quartal",
+              "hkn_rp_kwh": 0.0,
+              "hkn_structure": "bundled"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "notes": [
+            {
+              "severity": "info",
+              "text": {
+                "de": "Fixvergütung bis 30 kW beinhaltet  die Abhgabe des HKNs. Ab 30 kW Vergütung zum BFE-Marktpreis, ohne HKN-Abnahme."
+              }
+            }
+          ],
+          "user_inputs": []
         }
       ],
-      "uid": "CHE-108.955.110",
-      "nr_elcom": "2",
-      "name_fr": "sdadsadsad"
+      "uid": "CHE-105.981.944",
+      "nr_elcom": "5"
     }
   }
 }
