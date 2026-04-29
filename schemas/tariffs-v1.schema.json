@@ -168,7 +168,7 @@
 
     "power_tier": {
       "type": "object",
-      "required": ["kw_min", "kw_max", "base_model", "hkn_rp_kwh", "hkn_structure"],
+      "required": ["kw_min", "kw_max", "base_model", "hkn_structure"],
       "additionalProperties": true,
       "properties": {
         "kw_min": { "type": "number", "minimum": 0 },
@@ -196,7 +196,12 @@
           }
         },
 
-        "hkn_rp_kwh":    { "type": "number", "minimum": 0 },
+        "hkn_rp_kwh": {
+          "oneOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
         "hkn_structure": { "type": "string", "enum": ["additive_optin", "bundled", "none"] },
 
         "applies_when": { "$ref": "#/$defs/applies_when_clause" },
