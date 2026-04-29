@@ -43,7 +43,7 @@
   "utilities": {
     "ekz": {
       "nr_elcom": "486",
-      "uid": null,
+      "uid": "CHE-108.954.688",
       "name_de": "EKZ (Elektrizitätswerke des Kantons Zürich)",
       "name_fr": "EKZ (Centrales électriques du canton de Zurich)",
       "homepage": "https://www.ekz.ch",
@@ -96,8 +96,8 @@
       ]
     },
     "bkw": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "36",
+      "uid": "CHE-103.258.498",
       "name_de": "BKW (Berner Kraftwerke)",
       "name_fr": "BKW (Forces motrices bernoises)",
       "homepage": "https://www.bkw.ch",
@@ -135,8 +135,8 @@
       ]
     },
     "ckw": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "37",
+      "uid": "CHE-105.941.235",
       "name_de": "CKW (Centralschweizerische Kraftwerke)",
       "name_fr": "CKW (Centrales électriques de Suisse centrale)",
       "homepage": "https://www.ckw.ch",
@@ -164,9 +164,8 @@
       ]
     },
     "groupe_e": {
-      "nr_elcom": null,
-      "uid": null,
-      "name_de": "Groupe E",
+      "nr_elcom": "609",
+      "name_de": "Groupe EWWW",
       "name_fr": "Groupe E",
       "homepage": "https://www.groupe-e.ch",
       "rates": [
@@ -215,7 +214,8 @@
             }
           ]
         }
-      ]
+      ],
+      "uid": "CHE-108.954.582"
     },
     "primeo": {
       "nr_elcom": null,
@@ -272,8 +272,8 @@
       ]
     },
     "romande_energie": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "669",
+      "uid": "CHE-105.952.948",
       "name_de": "Romande Energie",
       "name_fr": "Romande Energie",
       "homepage": "https://www.romande-energie.ch",
@@ -301,8 +301,8 @@
       ]
     },
     "sak": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "727",
+      "uid": "CHE-114.776.923",
       "name_de": "SAK (St. Galler Stadtwerke)",
       "name_fr": "SAK (Services industriels de Saint-Gall)",
       "homepage": "https://www.sak.ch",
@@ -330,8 +330,8 @@
       ]
     },
     "sgsw": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "672",
+      "uid": "CHE-175.038.369",
       "name_de": "SGSW (St. Gallen Stadt)",
       "name_fr": "SGSW (Ville de Saint-Gall)",
       "homepage": "https://www.sgsw.ch",
@@ -359,8 +359,8 @@
       ]
     },
     "ewz": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "565",
+      "uid": "CHE-108.954.978",
       "name_de": "ewz (Elektrizitätswerk der Stadt Zürich)",
       "name_fr": "ewz (Services industriels de la ville de Zurich)",
       "homepage": "https://www.ewz.ch",
@@ -399,8 +399,8 @@
       ]
     },
     "iwb": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "624",
+      "uid": "CHE-108.955.038",
       "name_de": "IWB (Industrielle Werke Basel)",
       "name_fr": "IWB (Services industriels de Bâle)",
       "homepage": "https://www.iwb.ch",
@@ -429,8 +429,8 @@
       ]
     },
     "sig": {
-      "nr_elcom": null,
-      "uid": null,
+      "nr_elcom": "692",
+      "uid": "CHE-108.955.185",
       "name_de": "SIG (Services Industriels de Genève)",
       "name_fr": "SIG (Services Industriels de Genève)",
       "homepage": "https://www.sig-ge.ch",
@@ -474,7 +474,10 @@
             {
               "key": "tariff_model",
               "type": "enum",
-              "values": ["fixpreis", "rmp"],
+              "values": [
+                "fixpreis",
+                "rmp"
+              ],
               "default": "fixpreis",
               "label_de": "Tarifmodell",
               "label_fr": "Modèle tarifaire",
@@ -486,7 +489,9 @@
           ],
           "power_tiers": [
             {
-              "applies_when": { "tariff_model": "fixpreis" },
+              "applies_when": {
+                "tariff_model": "fixpreis"
+              },
               "kw_min": 2,
               "kw_max": 30,
               "base_model": "fixed_flat",
@@ -495,7 +500,9 @@
               "hkn_structure": "bundled"
             },
             {
-              "applies_when": { "tariff_model": "rmp" },
+              "applies_when": {
+                "tariff_model": "rmp"
+              },
               "kw_min": 2,
               "kw_max": 30,
               "base_model": "rmp_quartal",
@@ -568,12 +575,22 @@
               "hkn_structure": "additive_optin",
               "hkn_cases": [
                 {
-                  "when": { "season": "winter", "user_inputs": { "supply_product": true } },
+                  "when": {
+                    "season": "winter",
+                    "user_inputs": {
+                      "supply_product": true
+                    }
+                  },
                   "rp_kwh": 2.0,
                   "note": "Winterhalbjahr Okt–März, Bezug EK-Solar"
                 },
                 {
-                  "when": { "season": "summer", "user_inputs": { "supply_product": true } },
+                  "when": {
+                    "season": "summer",
+                    "user_inputs": {
+                      "supply_product": true
+                    }
+                  },
                   "rp_kwh": 1.0,
                   "note": "Sommerhalbjahr Apr–Sep, Bezug EK-Solar"
                 }
@@ -582,8 +599,22 @@
           ],
           "price_floor_rp_kwh": null,
           "seasonal": {
-            "summer_months": [4, 5, 6, 7, 8, 9],
-            "winter_months": [10, 11, 12, 1, 2, 3]
+            "summer_months": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "winter_months": [
+              10,
+              11,
+              12,
+              1,
+              2,
+              3
+            ]
           },
           "notes": [
             {
@@ -639,7 +670,11 @@
               "hkn_structure": "additive_optin",
               "hkn_cases": [
                 {
-                  "when": { "user_inputs": { "supply_product": true } },
+                  "when": {
+                    "user_inputs": {
+                      "supply_product": true
+                    }
+                  },
                   "rp_kwh": 4.0,
                   "note": "Voller Reststrombedarf mit SonnenStrom gedeckt"
                 }
@@ -716,10 +751,24 @@
           ],
           "price_floor_rp_kwh": null,
           "seasonal": {
-            "summer_months": [4, 5, 6, 7, 8, 9],
-            "winter_months": [10, 11, 12, 1, 2, 3],
-            "summer_rp_kwh": 6.20,
-            "winter_rp_kwh": 9.00
+            "summer_months": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "winter_months": [
+              10,
+              11,
+              12,
+              1,
+              2,
+              3
+            ],
+            "summer_rp_kwh": 6.2,
+            "winter_rp_kwh": 9.0
           },
           "notes": [
             {
@@ -758,7 +807,7 @@
         }
       ]
     },
-    "age_sa": {
+    "age_saasdsadsadsad": {
       "name_de": "Acqua Gas Elettricità SA Chiasso",
       "homepage": "https://www.age-sa.ch/",
       "rates": [
@@ -1030,7 +1079,8 @@
         }
       ],
       "uid": "CHE-108.955.110",
-      "nr_elcom": "2"
+      "nr_elcom": "2",
+      "name_fr": "sdadsadsad"
     }
   }
 }
