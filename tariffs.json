@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
-  "schema_version": "1.1.1",
+  "schema_version": "1.2.0",
   "last_updated": "2026-04-30",
   "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Schema 1.1.0 (Batch D) introduces user_inputs[] for parallel tariff variants (replaces the AEW two-entry hack), power_tier.hkn_cases[] for conditional HKN values, and bonuses[].kind/when for additive vs. multiplicative bonuses.",
   "federal_minimum": [
@@ -52,7 +52,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.ekz.ch/de/private/solaranlagen/rueckliefertarife.html",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -91,6 +90,11 @@
               "self_consumption": false,
               "cap_rp_kwh": 5.4
             }
+          ],
+          "tarif_urls": [
+            {
+              "url": "https://www.ekz.ch/de/private/solaranlagen/rueckliefertarife.html"
+            }
           ]
         }
       ]
@@ -106,7 +110,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.bkw.ch/de/produkte/solar/einspeisung",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -130,7 +133,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.bkw.ch/de/produkte/solar/einspeisung"
+            }
+          ]
         }
       ]
     },
@@ -145,7 +153,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.ckw.ch/private/solar/einspeisung.html",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -159,7 +166,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.ckw.ch/private/solar/einspeisung.html"
+            }
+          ]
         }
       ]
     },
@@ -173,7 +185,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.groupe-e.ch/fr/energie/electricite/electricite-photovoltaique",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -212,6 +223,11 @@
               "self_consumption": false,
               "cap_rp_kwh": 5.4
             }
+          ],
+          "tarif_urls": [
+            {
+              "url": "https://www.groupe-e.ch/fr/energie/electricite/electricite-photovoltaique"
+            }
           ]
         }
       ],
@@ -228,7 +244,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.primeo-energie.ch/de/strom/eigenproduktion",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -267,6 +282,11 @@
               "self_consumption": false,
               "cap_rp_kwh": 5.4
             }
+          ],
+          "tarif_urls": [
+            {
+              "url": "https://www.primeo-energie.ch/de/strom/eigenproduktion"
+            }
           ]
         }
       ]
@@ -282,7 +302,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.romande-energie.ch/produire-mon-electricite",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -296,7 +315,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.romande-energie.ch/produire-mon-electricite"
+            }
+          ]
         }
       ]
     },
@@ -311,7 +335,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.sak.ch/privatkunden/solar/einspeisung",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -325,7 +348,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.sak.ch/privatkunden/solar/einspeisung"
+            }
+          ]
         }
       ]
     },
@@ -340,7 +368,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.sgsw.ch/privatkunden/solarenergie/einspeisung.html",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -354,7 +381,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.sgsw.ch/privatkunden/solarenergie/einspeisung.html"
+            }
+          ]
         }
       ]
     },
@@ -369,7 +401,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.ewz.ch/dam/ewz/meinewz/Dokumentencenter/verguetung-stromruecklieferung-eea-tarif-zh-gr-DE.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -394,7 +425,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.ewz.ch/dam/ewz/meinewz/Dokumentencenter/verguetung-stromruecklieferung-eea-tarif-zh-gr-DE.pdf"
+            }
+          ]
         }
       ]
     },
@@ -409,7 +445,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.iwb.ch/privatkunden/solarenergie",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -424,7 +459,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.iwb.ch/privatkunden/solarenergie"
+            }
+          ]
         }
       ]
     },
@@ -439,7 +479,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.sig-ge.ch/electricite/produire-de-l-electricite",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -454,7 +493,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.sig-ge.ch/electricite/produire-de-l-electricite"
+            }
+          ]
         }
       ]
     },
@@ -465,453 +509,9 @@
       "homepage": "https://www.aew.ch",
       "rates": [
         {
-          "valid_from": "2017-01-01",
-          "valid_to": "2018-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "http://www.aew.ch/content/dam/aew/downloads/strom/produkte-2017/AEW-messung.pdf.res/AEW-messung.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 100.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 6.2,
-              "fixed_nt_rp_kwh": 4.45,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [
-            {
-              "severity": "info",
-              "text": {
-                "de": "Die AEW Energie AG bietet für die Verwertung des HKN's den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
-              }
-            }
-          ],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2018-01-01",
-          "valid_to": "2019-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2018/aew-messung-2018.pdf.res/aew-messung-2018.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 100.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 5.43,
-              "fixed_nt_rp_kwh": 3.73,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [
-            {
-              "severity": "info",
-              "text": {
-                "de": "Die AEW Energie AG bietet für die Verwertung des HKN\\'s den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
-              }
-            }
-          ],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2019-01-01",
-          "valid_to": "2020-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2019/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf.res/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 100.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 6.25,
-              "fixed_nt_rp_kwh": 4.55,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [
-            {
-              "severity": "info",
-              "text": {
-                "de": "Die AEW Energie AG bietet für die Verwertung des HKNs den Vereins Aargauer Naturstrom (ANS) und die Ökostrombörse an"
-              }
-            }
-          ],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2020-01-01",
-          "valid_to": "2021-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2019-08/aew-p-e-en-aew-verguetung-fuer-produzenten-2020.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 3000.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 7.2,
-              "fixed_nt_rp_kwh": 5.6,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2021-01-01",
-          "valid_to": "2022-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2020-08/aew-p-e-en-hkn-aew-verguetung-fuer-produzenten-2021_1.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin",
-              "fixed_ht_rp_kwh": 6.75,
-              "fixed_nt_rp_kwh": 5.4,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            },
-            {
-              "kw_min": 30.0,
-              "kw_max": 3000.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 6.75,
-              "fixed_nt_rp_kwh": 5.4,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [
-            {
-              "severity": "info",
-              "text": {
-                "de": "Neu: ab dem 1.1.2021 übernimmt die AEW den HKN für alle Anlagen < 30 kVA zu 3 Rp/kWh."
-              }
-            }
-          ],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2022-01-01",
-          "valid_to": "2023-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2021-08/AEW_p_e_en_HKN_2022.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin",
-              "fixed_ht_rp_kwh": 7.1,
-              "fixed_nt_rp_kwh": 5.95,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            },
-            {
-              "kw_min": 30.0,
-              "kw_max": 3000.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 7.1,
-              "fixed_nt_rp_kwh": 5.95,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2023-01-01",
-          "valid_to": "2024-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2022-08/AEW_Ruecklieferung_Herkunftsnachweis_2023.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin",
-              "fixed_ht_rp_kwh": 9.15,
-              "fixed_nt_rp_kwh": 7.4,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            },
-            {
-              "kw_min": 30.0,
-              "kw_max": 3000.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 9.15,
-              "fixed_nt_rp_kwh": 7.4,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2024-01-01",
-          "valid_to": "2025-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2023-08/AEW_Ruecklieferung_Herkunftsnachweis_2024.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin",
-              "fixed_ht_rp_kwh": 15.25,
-              "fixed_nt_rp_kwh": 13.3,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            },
-            {
-              "kw_min": 30.0,
-              "kw_max": null,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": 0.0,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 15.25,
-              "fixed_nt_rp_kwh": 13.3,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [],
-          "user_inputs": []
-        },
-        {
-          "valid_from": "2025-01-01",
-          "valid_to": "2026-01-01",
-          "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2024-08/AEW_Ruecklieferung_2025.pdf",
-          "power_tiers": [
-            {
-              "kw_min": 0.0,
-              "kw_max": 30.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin",
-              "fixed_ht_rp_kwh": 8.15,
-              "fixed_nt_rp_kwh": 6.0,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            },
-            {
-              "kw_min": 30.0,
-              "kw_max": 3000.0,
-              "base_model": "fixed_ht_nt",
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none",
-              "fixed_ht_rp_kwh": 8.15,
-              "fixed_nt_rp_kwh": 6.0,
-              "ht_window": {
-                "mofr": [
-                  7,
-                  20
-                ],
-                "sa": [
-                  7,
-                  13
-                ],
-                "su": null
-              }
-            }
-          ],
-          "price_floor_rp_kwh": null,
-          "bonuses": [],
-          "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null,
-          "notes": [],
-          "user_inputs": []
-        },
-        {
           "valid_from": "2026-01-01",
           "valid_to": "2027-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Fixpreis_2026.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -919,14 +519,20 @@
               "base_model": "fixed_flat",
               "hkn_rp_kwh": 0.0,
               "hkn_structure": "bundled",
-              "fixed_rp_kwh": 8.2
+              "fixed_rp_kwh": 8.2,
+              "applies_when": {
+                "aew_fixpreis_rmp": "AEW Fixpreis"
+              }
             },
             {
               "kw_min": 30.0,
               "kw_max": 3000.0,
               "base_model": "rmp_quartal",
               "hkn_rp_kwh": 0.0,
-              "hkn_structure": "none"
+              "hkn_structure": "none",
+              "applies_when": {
+                "aew_fixpreis_rmp": "Referenzmarktpreis"
+              }
             }
           ],
           "price_floor_rp_kwh": null,
@@ -953,6 +559,11 @@
                 "Referenzmarktpreis"
               ]
             }
+          ],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Fixpreis_2026.pdf"
+            }
           ]
         }
       ],
@@ -969,7 +580,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.dkek.ch/_docn/171962/Strom_R%C3%BCckliefertarife_ab_01.01.2026.pdf",
           "user_inputs": [
             {
               "key": "supply_product",
@@ -1049,7 +659,12 @@
           ],
           "bonuses": [],
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.dkek.ch/_docn/171962/Strom_R%C3%BCckliefertarife_ab_01.01.2026.pdf"
+            }
+          ]
         }
       ]
     },
@@ -1064,7 +679,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.ewn.ch/wp-content/uploads/2026/01/20260123_Vorl_Produktblatt_Einspeiseverguetung_web.pdf",
           "user_inputs": [
             {
               "key": "supply_product",
@@ -1130,7 +744,12 @@
           "bonuses": [],
           "seasonal": null,
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.ewn.ch/wp-content/uploads/2026/01/20260123_Vorl_Produktblatt_Einspeiseverguetung_web.pdf"
+            }
+          ]
         }
       ]
     },
@@ -1145,7 +764,6 @@
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.regioenergie.ch/de/download/verguetung-fuer-die-energieeinspeisung-2026/",
           "power_tiers": [
             {
               "kw_min": 0,
@@ -1218,7 +836,12 @@
             }
           ],
           "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "tarif_urls": [
+            {
+              "url": "https://www.regioenergie.ch/de/download/verguetung-fuer-die-energieeinspeisung-2026/"
+            }
+          ]
         }
       ]
     },
@@ -1230,7 +853,6 @@
           "valid_from": "2017-01-01",
           "valid_to": "2018-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "http://www.aew.ch/content/dam/aew/downloads/strom/produkte-2017/AEW-messung.pdf.res/AEW-messung.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1266,13 +888,17 @@
               }
             }
           ],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "http://www.aew.ch/content/dam/aew/downloads/strom/produkte-2017/AEW-messung.pdf.res/AEW-messung.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2018-01-01",
           "valid_to": "2019-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2018/aew-messung-2018.pdf.res/aew-messung-2018.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1308,13 +934,17 @@
               }
             }
           ],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2018/aew-messung-2018.pdf.res/aew-messung-2018.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2019-01-01",
           "valid_to": "2020-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2019/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf.res/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1350,13 +980,17 @@
               }
             }
           ],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/content/dam/aew/downloads/strom/produkte-2019/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf.res/aew-p-e-en-aew-verguetung-fuer-produzenten-2019.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2020-01-01",
           "valid_to": "2021-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2019-08/aew-p-e-en-aew-verguetung-fuer-produzenten-2020.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1385,13 +1019,17 @@
           "cap_mode": false,
           "cap_rules": null,
           "notes": [],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2019-08/aew-p-e-en-aew-verguetung-fuer-produzenten-2020.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2021-01-01",
           "valid_to": "2022-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2020-08/aew-p-e-en-hkn-aew-verguetung-fuer-produzenten-2021_1.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1447,13 +1085,17 @@
               }
             }
           ],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2020-08/aew-p-e-en-hkn-aew-verguetung-fuer-produzenten-2021_1.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2022-01-01",
           "valid_to": "2023-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2021-08/AEW_p_e_en_HKN_2022.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1502,13 +1144,17 @@
           "cap_mode": false,
           "cap_rules": null,
           "notes": [],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2021-08/AEW_p_e_en_HKN_2022.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2023-01-01",
           "valid_to": "2024-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2022-08/AEW_Ruecklieferung_Herkunftsnachweis_2023.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1557,13 +1203,17 @@
           "cap_mode": false,
           "cap_rules": null,
           "notes": [],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2022-08/AEW_Ruecklieferung_Herkunftsnachweis_2023.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2024-01-01",
           "valid_to": "2025-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2023-08/AEW_Ruecklieferung_Herkunftsnachweis_2024.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1592,13 +1242,17 @@
           "cap_mode": false,
           "cap_rules": null,
           "notes": [],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2023-08/AEW_Ruecklieferung_Herkunftsnachweis_2024.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2025-01-01",
           "valid_to": "2026-01-01",
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2024-08/AEW_Ruecklieferung_2025.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1623,13 +1277,17 @@
           "cap_mode": false,
           "cap_rules": null,
           "notes": [],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2024-08/AEW_Ruecklieferung_2025.pdf"
+            }
+          ]
         },
         {
           "valid_from": "2026-01-01",
           "valid_to": null,
           "settlement_period": "quartal",
-          "tarif_url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Fixpreis_2026.pdf",
           "power_tiers": [
             {
               "kw_min": 0.0,
@@ -1660,7 +1318,12 @@
               }
             }
           ],
-          "user_inputs": []
+          "user_inputs": [],
+          "tarif_urls": [
+            {
+              "url": "https://www.aew.ch/sites/default/files/2025-11/AEW_Ruecklieferung_Fixpreis_2026.pdf"
+            }
+          ]
         }
       ],
       "uid": "CHE-105.981.944",

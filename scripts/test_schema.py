@@ -218,6 +218,38 @@ def case_12_integrity_walk():
         raise AssertionError("12 integrity walk:\n  - " + "\n  - ".join(failures))
 
 
+def case_13_tarif_urls_well_formed():
+    doc = _minimal_doc()
+    rate = doc["utilities"]["test_util"]["rates"][0]
+    rate["tarif_urls"] = [
+        {"url": "https://example.test/a.pdf",
+         "label_de": "Energie", "kind": "pdf",
+         "applies_when": {"tariff_model": "fixpreis"}},
+        {"url": "https://example.test/b", "kind": "html"},
+    ]
+    _expect_valid("13 tarif_urls well-formed", doc)
+
+
+def case_14_tarif_urls_rejects_missing_url():
+    doc = _minimal_doc()
+    rate = doc["utilities"]["test_util"]["rates"][0]
+    rate["tarif_urls"] = [{"label_de": "no url here"}]
+    _expect_invalid("14 tarif_urls missing url", doc, "url")
+
+
+def case_15_user_input_value_labels_well_formed():
+    doc = _minimal_doc()
+    rate = doc["utilities"]["test_util"]["rates"][0]
+    rate["user_inputs"] = [
+        {"key": "tariff_model", "type": "enum",
+         "values": ["fixpreis", "rmp"], "default": "fixpreis",
+         "label_de": "Tarifmodell",
+         "value_labels_de": {"fixpreis": "AEW Fixpreis",
+                             "rmp": "Referenzmarktpreis"}},
+    ]
+    _expect_valid("15 user_input value_labels", doc)
+
+
 CASES = [
     case_01_hkn_cases_well_formed,
     case_02_hkn_cases_negative_rp_kwh,
@@ -231,6 +263,9 @@ CASES = [
     case_10_applies_when_rejects_nested_value,
     case_11_real_samples_validate,
     case_12_integrity_walk,
+    case_13_tarif_urls_well_formed,
+    case_14_tarif_urls_rejects_missing_url,
+    case_15_user_input_value_labels_well_formed,
 ]
 
 
