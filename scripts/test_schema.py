@@ -106,21 +106,21 @@ def case_02_hkn_cases_negative_rp_kwh():
 def case_03_bonus_additive_requires_rate():
     doc = _minimal_doc()
     rate = doc["utilities"]["test_util"]["rates"][0]
-    rate["bonuses"] = [{"kind": "additive_rp_kwh", "name": "X", "applies_when": "always"}]
+    rate["bonuses"] = [{"kind": "additive_rp_kwh", "name": "X"}]
     _expect_invalid("03 bonus additive missing rate_rp_kwh", doc, "rate_rp_kwh")
 
 
 def case_04_bonus_multiplier_requires_multiplier_pct():
     doc = _minimal_doc()
     rate = doc["utilities"]["test_util"]["rates"][0]
-    rate["bonuses"] = [{"kind": "multiplier_pct", "name": "X", "applies_when": "opt_in"}]
+    rate["bonuses"] = [{"kind": "multiplier_pct", "name": "X"}]
     _expect_invalid("04 bonus multiplier missing multiplier_pct", doc, "multiplier_pct")
 
 
 def case_05_bonus_kind_enum_rejects_unknown():
     doc = _minimal_doc()
     rate = doc["utilities"]["test_util"]["rates"][0]
-    rate["bonuses"] = [{"kind": "wat", "name": "X", "applies_when": "always"}]
+    rate["bonuses"] = [{"kind": "wat", "name": "X"}]
     _expect_invalid("05 bonus kind=wat", doc, "'wat'")
 
 
@@ -250,6 +250,26 @@ def case_15_user_input_value_labels_well_formed():
     _expect_valid("15 user_input value_labels", doc)
 
 
+def case_16_no_bonus_carries_applies_when():
+    """v1.3.0+ schema: bonus.applies_when is dropped. Defend against
+    re-introduction in tariffs.json — opt-in bonuses must be gated via
+    a `when.user_inputs.<key>: true` clause backed by a declared
+    user_inputs[] boolean."""
+    failures = []
+    for util_key, util in DATA["utilities"].items():
+        for r_idx, rate in enumerate(util.get("rates", [])):
+            for b_idx, bonus in enumerate(rate.get("bonuses", [])):
+                if "applies_when" in bonus:
+                    failures.append(
+                        f"{util_key}.rates[{r_idx}].bonuses[{b_idx}] "
+                        f"carries forbidden 'applies_when' field"
+                    )
+    if failures:
+        raise AssertionError(
+            "16 no-bonus-applies_when:\n  - " + "\n  - ".join(failures)
+        )
+
+
 CASES = [
     case_01_hkn_cases_well_formed,
     case_02_hkn_cases_negative_rp_kwh,
@@ -266,6 +286,7 @@ CASES = [
     case_13_tarif_urls_well_formed,
     case_14_tarif_urls_rejects_missing_url,
     case_15_user_input_value_labels_well_formed,
+    case_16_no_bonus_carries_applies_when,
 ]
 
 

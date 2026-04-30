@@ -233,12 +233,11 @@
 
     "bonus": {
       "type": "object",
-      "required": ["kind", "name", "applies_when"],
+      "required": ["kind", "name"],
       "additionalProperties": true,
       "properties": {
         "kind":           { "type": "string", "enum": ["additive_rp_kwh", "multiplier_pct"] },
         "name":           { "type": "string", "minLength": 1 },
-        "applies_when":   { "type": "string", "enum": ["always", "opt_in"] },
         "rate_rp_kwh":    { "type": "number" },
         "multiplier_pct": { "type": "number" },
         "when":           { "$ref": "#/$defs/when_clause" },

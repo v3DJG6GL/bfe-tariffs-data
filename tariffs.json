@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
-  "schema_version": "1.2.1",
+  "schema_version": "1.3.0",
   "last_updated": "2026-04-30",
   "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Schema 1.1.0 (Batch D) introduces user_inputs[] for parallel tariff variants (replaces the AEW two-entry hack), power_tier.hkn_cases[] for conditional HKN values, and bonuses[].kind/when for additive vs. multiplicative bonuses.",
   "federal_minimum": [
@@ -703,6 +703,15 @@
               "hkn_structure": "additive_optin"
             }
           ],
+          "user_inputs": [
+            {
+              "key": "regio_top40_opted_in",
+              "type": "boolean",
+              "default": false,
+              "label_de": "Wahltarif TOP-40 abonniert",
+              "description_de": "Voraussetzungen: dauerhafte Begrenzung der Einspeiseleistung auf 60 % der DC-Maximalleistung; DC-Leistung > 3.7 kWp; Pronovo-Zertifizierung."
+            }
+          ],
           "price_floor_rp_kwh": null,
           "notes": [
             {
@@ -731,8 +740,12 @@
             {
               "kind": "multiplier_pct",
               "name": "Wahltarif TOP-40",
-              "applies_when": "opt_in",
               "multiplier_pct": 8.0,
+              "when": {
+                "user_inputs": {
+                  "regio_top40_opted_in": true
+                }
+              },
               "note": "+8 % auf die gesamte ins Netz eingespeiste Energie. Voraussetzung: dauerhafte Begrenzung der Einspeiseleistung am Netzanschlusspunkt auf 60 % der DC-Maximalleistung der Anlage; DC-Leistung > 3.7 kWp; Pronovo-Zertifizierung. Inbetriebnahme jeweils zum nächsten Quartal."
             }
           ],
