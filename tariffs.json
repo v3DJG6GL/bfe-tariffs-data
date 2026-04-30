@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
-  "schema_version": "1.2.0",
+  "schema_version": "1.2.1",
   "last_updated": "2026-04-30",
   "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Schema 1.1.0 (Batch D) introduces user_inputs[] for parallel tariff variants (replaces the AEW two-entry hack), power_tier.hkn_cases[] for conditional HKN values, and bonuses[].kind/when for additive vs. multiplicative bonuses.",
   "federal_minimum": [
