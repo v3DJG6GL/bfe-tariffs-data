@@ -353,11 +353,44 @@ def _kw_in_any_band(tiers, kw):
     )
 
 
+def _combo_effective_bands(tiers, combo):
+    """Return list of (kw_min, kw_max) bands where `combo` would resolve
+    a tier — tiers whose `applies_when` matches the combo, plus no-clause
+    tiers. Empty list = combo never resolves at any kW (curator forgot a
+    value)."""
+    bands = []
+    for t in tiers:
+        clause = t.get("applies_when") or {}
+        if not clause or all(combo.get(k) == v for k, v in clause.items()):
+            bands.append((t["kw_min"], t["kw_max"]))
+    return bands
+
+
+def _kw_in_bands(bands, kw):
+    return any(
+        kmin <= kw < (kmax if kmax is not None else float("inf"))
+        for kmin, kmax in bands
+    )
+
+
 def case_17_no_uncovered_kw_user_input_combinations():
-    """For every (kW probe × user_input combo), if any tier covers kW,
-    `find_tier_for` must resolve. Catches runtime LookupError holes the
-    schema can't see (e.g. two tiers gated on different enum values, no
-    fallback for a third value the user could pick)."""
+    """For every declared user_input combo:
+
+    (a) The combo must have a non-empty *effective kW domain* — at least
+        one tier in the rate must carry an `applies_when` that matches
+        it (or no clause at all). An empty domain means the curator
+        declared a value (e.g. `mode=b`) without giving any tier for
+        it — runtime would always raise LookupError when the user picks
+        it. Real curator error.
+
+    (b) For every kW probe inside the combo's effective domain,
+        `find_tier_for` must resolve. Catches gaps within the declared
+        coverage (overlapping clauses, missing fallback, etc.).
+
+    Combos OUTSIDE their effective domain are intentional: the curator
+    scoped them via `applies_when` + `kw_max` (e.g. AEW Fixpreis ≤30 kW
+    only), and the integration filters them out at render time. We don't
+    flag those — they're a UX shape, not a runtime hole."""
     failures = []
     for util_key, util in DATA["utilities"].items():
         for r_idx, rate in enumerate(util.get("rates", [])):
@@ -365,10 +398,20 @@ def case_17_no_uncovered_kw_user_input_combinations():
             if not tiers:
                 continue
             combos = _enumerate_combos(rate.get("user_inputs", []))
-            for kw in _kw_probe_set(tiers):
-                if not _kw_in_any_band(tiers, kw):
+            for combo in combos:
+                eff_bands = _combo_effective_bands(tiers, combo)
+                if not eff_bands:
+                    failures.append(
+                        f"{util_key}.rates[{r_idx}] combo={combo}: "
+                        f"declared in user_inputs but no tier matches "
+                        f"at any kW (curator forgot a value)"
+                    )
                     continue
-                for combo in combos:
+                for kw in _kw_probe_set(tiers):
+                    if not _kw_in_any_band(tiers, kw):
+                        continue
+                    if not _kw_in_bands(eff_bands, kw):
+                        continue
                     if _find_tier_for(tiers, kw, combo) is None:
                         failures.append(
                             f"{util_key}.rates[{r_idx}] @ kW={kw} "
