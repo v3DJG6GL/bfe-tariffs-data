@@ -118,7 +118,6 @@
               "kw_max": 30.0,
               "base_model": "fixed_flat",
               "fixed_rp_kwh": 8.2,
-              "hkn_rp_kwh": 0.0,
               "hkn_structure": "bundled",
               "applies_when": {
                 "fixpreis_rmp": "fixpreis"
@@ -128,7 +127,6 @@
               "kw_min": 2.0,
               "kw_max": 3000.0,
               "base_model": "rmp_quartal",
-              "fixed_rp_kwh": 8.2,
               "hkn_structure": "none",
               "applies_when": {
                 "fixpreis_rmp": "rmp"
