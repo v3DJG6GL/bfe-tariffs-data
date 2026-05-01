@@ -8,6 +8,7 @@
   "properties": {
     "$schema":        { "type": "string" },
     "schema_version": { "type": "string", "pattern": "^1\\.\\d+\\.\\d+$" },
+    "data_version":   { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
     "last_updated":   { "type": "string", "format": "date" },
     "notes":          { "type": "string" },
 
