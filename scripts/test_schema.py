@@ -699,6 +699,35 @@ def case_25_no_legacy_cap_mode():
         )
 
 
+def case_26_tier_seasonal_coherence_with_base_model():
+    """v1.6.0: tier-level `seasonal` is the source of truth ONLY when
+    `base_model = fixed_seasonal`. Inverse: every `fixed_seasonal`
+    tier MUST carry a non-null seasonal block. Mirrors the schema's
+    `power_tier.allOf` clause at data-lint level so a stray tier-
+    seasonal block on (e.g.) `rmp_quartal` fails CI immediately."""
+    failures = []
+    for util_key, util in DATA["utilities"].items():
+        for r_idx, rate in enumerate(util.get("rates", [])):
+            for t_idx, tier in enumerate(rate.get("power_tiers", [])):
+                base = tier.get("base_model")
+                tier_seasonal = tier.get("seasonal")
+                loc = f"{util_key}.rates[{r_idx}].power_tiers[{t_idx}]"
+                if tier_seasonal is not None and base != "fixed_seasonal":
+                    failures.append(
+                        f"{loc}: tier-level seasonal but "
+                        f"base_model={base!r} (must be fixed_seasonal)"
+                    )
+                if base == "fixed_seasonal" and tier_seasonal is None:
+                    failures.append(
+                        f"{loc}: base_model=fixed_seasonal but "
+                        f"seasonal is null (required)"
+                    )
+    if failures:
+        raise AssertionError(
+            "26 tier seasonal coherence:\n  - " + "\n  - ".join(failures)
+        )
+
+
 CASES = [
     case_01_hkn_cases_well_formed,
     case_02_hkn_cases_negative_rp_kwh,
@@ -725,6 +754,7 @@ CASES = [
     case_23_user_input_default_in_values,
     case_24_nr_elcom_unique_across_utilities,
     case_25_no_legacy_cap_mode,
+    case_26_tier_seasonal_coherence_with_base_model,
 ]
 
 
