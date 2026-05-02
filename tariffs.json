@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
-  "schema_version": "1.4.0",
+  "schema_version": "1.5.0",
   "data_version": "0.0.5",
   "last_updated": "2026-05-02",
   "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Schema 1.1.0 (Batch D) introduces user_inputs[] for parallel tariff variants (replaces the AEW two-entry hack), power_tier.hkn_cases[] for conditional HKN values, and bonuses[].kind/when for additive vs. multiplicative bonuses.",
@@ -78,9 +78,7 @@
                   13
                 ],
                 "su": null
-              },
-              "hkn_rp_kwh": null,
-              "hkn_structure": "none"
+              }
             }
           ],
           "user_inputs": [],
@@ -95,8 +93,9 @@
           ],
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "none",
+          "hkn_rp_kwh_default": null
         },
         {
           "valid_from": "2026-01-01",
@@ -163,7 +162,6 @@
           ],
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
           "cap_rules": null
         }
       ]
@@ -188,9 +186,7 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 2.0,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
@@ -206,8 +202,9 @@
           ],
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 2.0
         }
       ]
     },
@@ -231,16 +228,15 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 3.0
         }
       ]
     },
@@ -265,8 +261,6 @@
               "kw_min": 2,
               "kw_max": 30,
               "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 0.0,
-              "hkn_structure": "additive_optin",
               "hkn_cases": [
                 {
                   "when": {
@@ -338,8 +332,9 @@
               3
             ]
           },
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 0.0
         }
       ]
     },
@@ -376,9 +371,7 @@
                 ],
                 "sa": null,
                 "su": null
-              },
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin"
+              }
             }
           ],
           "user_inputs": [],
@@ -386,8 +379,9 @@
           "notes": [],
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 3.0
         },
         {
           "valid_from": "2026-01-01",
@@ -402,15 +396,12 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": true,
           "cap_rules": [
             {
               "kw_min": 0,
@@ -436,7 +427,9 @@
               "self_consumption": false,
               "cap_rp_kwh": 5.4
             }
-          ]
+          ],
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 3.0
         }
       ]
     },
@@ -461,8 +454,6 @@
               "kw_min": 0,
               "kw_max": 150,
               "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 2.0,
-              "hkn_structure": "additive_optin",
               "hkn_cases": [
                 {
                   "when": {
@@ -520,8 +511,9 @@
           ],
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 2.0
         }
       ]
     },
@@ -556,16 +548,15 @@
                 ],
                 "sa": null,
                 "su": null
-              },
-              "hkn_rp_kwh": 3.0,
-              "hkn_structure": "additive_optin"
+              }
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 3.0
         }
       ]
     },
@@ -589,15 +580,12 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 4.0,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": true,
           "cap_rules": [
             {
               "kw_min": 0,
@@ -623,7 +611,9 @@
               "self_consumption": false,
               "cap_rp_kwh": 5.4
             }
-          ]
+          ],
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 4.0
         }
       ]
     },
@@ -648,16 +638,15 @@
               "kw_min": 0,
               "kw_max": null,
               "base_model": "fixed_flat",
-              "fixed_rp_kwh": 12.95,
-              "hkn_rp_kwh": null,
-              "hkn_structure": "bundled"
+              "fixed_rp_kwh": 12.95
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "bundled",
+          "hkn_rp_kwh_default": null
         }
       ]
     },
@@ -681,15 +670,12 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 2.0,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": true,
           "cap_rules": [
             {
               "kw_min": 0,
@@ -715,7 +701,9 @@
               "self_consumption": false,
               "cap_rp_kwh": 5.4
             }
-          ]
+          ],
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 2.0
         }
       ]
     },
@@ -818,7 +806,6 @@
             "summer_rp_kwh": 6.2,
             "winter_rp_kwh": 9.0
           },
-          "cap_mode": false,
           "cap_rules": null
         }
       ]
@@ -843,16 +830,15 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 1.5,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 1.5
         }
       ]
     },
@@ -876,16 +862,15 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 1.5,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 1.5
         }
       ]
     },
@@ -909,16 +894,15 @@
             {
               "kw_min": 0,
               "kw_max": null,
-              "base_model": "rmp_quartal",
-              "hkn_rp_kwh": 4.6,
-              "hkn_structure": "additive_optin"
+              "base_model": "rmp_quartal"
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 4.6
         }
       ]
     },
@@ -943,16 +927,15 @@
               "kw_min": 0,
               "kw_max": null,
               "base_model": "fixed_flat",
-              "fixed_rp_kwh": 8.16,
-              "hkn_rp_kwh": 2.8,
-              "hkn_structure": "additive_optin"
+              "fixed_rp_kwh": 8.16
             }
           ],
           "price_floor_rp_kwh": null,
           "bonuses": [],
           "seasonal": null,
-          "cap_mode": false,
-          "cap_rules": null
+          "cap_rules": null,
+          "hkn_structure_default": "additive_optin",
+          "hkn_rp_kwh_default": 2.8
         }
       ]
     }

@@ -31,6 +31,7 @@ Data-content cases (walk real tariffs.json, expect well-formed):
   22. HKN cascade: structure ↔ hkn_rp_kwh ↔ hkn_cases coherence
   23. user_input enum default ∈ values
   24. nr_elcom unique across utilities
+  25. No legacy cap_mode field (v1.5.0+ hard-dropped)
 
 Run: `python3 scripts/test_schema.py` (exits non-zero on any failure;
 GitHub Actions wires this up via .github/workflows/validate.yml).
@@ -80,7 +81,6 @@ def _minimal_doc():
                                 "hkn_structure": "additive_optin",
                             }
                         ],
-                        "cap_mode": False,
                     }
                 ],
             }
@@ -195,8 +195,9 @@ def case_11_real_samples_validate():
 
 def _walk_user_input_refs(rate: dict) -> list[tuple[str, dict, dict]]:
     """Yield (location, when_or_applies_dict, declared_inputs_by_key) for each
-    user_input reference in the rate. Walks all four clause sites:
+    user_input reference in the rate. Walks all clause sites:
     power_tiers.applies_when, power_tiers.hkn_cases[].when.user_inputs,
+    power_tiers.bonuses[].when.user_inputs (v1.5.0+),
     bonuses[].when.user_inputs, tarif_urls[].applies_when."""
     declared = {ui["key"]: ui for ui in rate.get("user_inputs", [])}
     refs = []
@@ -207,6 +208,10 @@ def _walk_user_input_refs(rate: dict) -> list[tuple[str, dict, dict]]:
             ui_match = case.get("when", {}).get("user_inputs")
             if ui_match:
                 refs.append((f"power_tiers[{i}].hkn_cases[{j}].when.user_inputs", ui_match, declared))
+        for k, bonus in enumerate(tier.get("bonuses", []) or []):
+            ui_match = bonus.get("when", {}).get("user_inputs")
+            if ui_match:
+                refs.append((f"power_tiers[{i}].bonuses[{k}].when.user_inputs", ui_match, declared))
     for k, bonus in enumerate(rate.get("bonuses", [])):
         ui_match = bonus.get("when", {}).get("user_inputs")
         if ui_match:
@@ -280,7 +285,7 @@ def case_16_no_bonus_carries_applies_when():
     """v1.3.0+ schema: bonus.applies_when is dropped. Defend against
     re-introduction in tariffs.json — opt-in bonuses must be gated via
     a `when.user_inputs.<key>: true` clause backed by a declared
-    user_inputs[] boolean."""
+    user_inputs[] boolean. v1.5.0+ extends scope to tier-level bonuses."""
     failures = []
     for util_key, util in DATA["utilities"].items():
         for r_idx, rate in enumerate(util.get("rates", [])):
@@ -290,6 +295,13 @@ def case_16_no_bonus_carries_applies_when():
                         f"{util_key}.rates[{r_idx}].bonuses[{b_idx}] "
                         f"carries forbidden 'applies_when' field"
                     )
+            for t_idx, tier in enumerate(rate.get("power_tiers", [])):
+                for b_idx, bonus in enumerate(tier.get("bonuses", []) or []):
+                    if "applies_when" in bonus:
+                        failures.append(
+                            f"{util_key}.rates[{r_idx}].power_tiers[{t_idx}]."
+                            f"bonuses[{b_idx}] carries forbidden 'applies_when' field"
+                        )
     if failures:
         raise AssertionError(
             "16 no-bonus-applies_when:\n  - " + "\n  - ".join(failures)
@@ -544,23 +556,33 @@ def case_20_ht_window_consistency():
 def case_21_seasonal_month_coverage():
     """seasonal.summer_months ∪ winter_months must equal {1..12} with
     no overlap. Gaps → ValueError mid-resolve in classify_season;
-    overlaps → summer silently wins (first check)."""
+    overlaps → summer silently wins (first check). v1.5.0+ extends to
+    tier-level `power_tiers[*].seasonal` blocks too."""
     failures = []
+
+    def _check(seasonal, loc):
+        summer = set(seasonal.get("summer_months") or [])
+        winter = set(seasonal.get("winter_months") or [])
+        full = summer | winter
+        missing = set(range(1, 13)) - full
+        overlap = summer & winter
+        if missing:
+            failures.append(f"{loc}: months {sorted(missing)} not in summer or winter")
+        if overlap:
+            failures.append(f"{loc}: months {sorted(overlap)} in both summer and winter")
+
     for util_key, util in DATA["utilities"].items():
         for r_idx, rate in enumerate(util.get("rates", [])):
             seasonal = rate.get("seasonal")
-            if not seasonal:
-                continue
-            summer = set(seasonal.get("summer_months") or [])
-            winter = set(seasonal.get("winter_months") or [])
-            loc = f"{util_key}.rates[{r_idx}].seasonal"
-            full = summer | winter
-            missing = set(range(1, 13)) - full
-            overlap = summer & winter
-            if missing:
-                failures.append(f"{loc}: months {sorted(missing)} not in summer or winter")
-            if overlap:
-                failures.append(f"{loc}: months {sorted(overlap)} in both summer and winter")
+            if seasonal:
+                _check(seasonal, f"{util_key}.rates[{r_idx}].seasonal")
+            for t_idx, tier in enumerate(rate.get("power_tiers", [])):
+                tier_seasonal = tier.get("seasonal")
+                if tier_seasonal:
+                    _check(
+                        tier_seasonal,
+                        f"{util_key}.rates[{r_idx}].power_tiers[{t_idx}].seasonal",
+                    )
     if failures:
         raise AssertionError("21 seasonal month coverage:\n  - " + "\n  - ".join(failures))
 
@@ -569,20 +591,40 @@ def case_22_hkn_structure_consistency():
     """HKN cascade: hkn_structure ↔ hkn_rp_kwh ↔ hkn_cases coherence.
     - 'additive_optin' → hkn_rp_kwh is set (number) OR hkn_cases is non-empty.
     - 'bundled' / 'none' → hkn_rp_kwh is null AND no hkn_cases.
-    Drift is silently ignored at runtime (importer.py:140-141)."""
+    Drift is silently ignored at runtime (importer.py:140-141).
+
+    v1.5.0+ allows tier `hkn_structure` / `hkn_rp_kwh` to be omitted; in
+    that case rate-level `hkn_structure_default` / `hkn_rp_kwh_default`
+    fill in. Both defaults must be set together (or both omitted)."""
     failures = []
     for util_key, util in DATA["utilities"].items():
         for r_idx, rate in enumerate(util.get("rates", [])):
+            rate_struct = rate.get("hkn_structure_default")
+            rate_rp = rate.get("hkn_rp_kwh_default", "MISSING")
+            rate_loc = f"{util_key}.rates[{r_idx}]"
+            # rate-level defaults: pair check
+            if (rate_struct is None) != (rate_rp == "MISSING"):
+                # one set, other not
+                failures.append(
+                    f"{rate_loc}: hkn_structure_default and hkn_rp_kwh_default "
+                    f"must be set together (got struct={rate_struct!r}, "
+                    f"rp_kwh_default={'<unset>' if rate_rp == 'MISSING' else rate_rp})"
+                )
             for t_idx, tier in enumerate(rate.get("power_tiers", [])):
-                struct = tier.get("hkn_structure")
-                rp = tier.get("hkn_rp_kwh")
+                struct = tier.get("hkn_structure", rate_struct)
+                rp = tier.get("hkn_rp_kwh", rate_rp if rate_rp != "MISSING" else None)
                 cases = tier.get("hkn_cases") or []
                 loc = f"{util_key}.rates[{r_idx}].power_tiers[{t_idx}]"
+                if struct is None:
+                    failures.append(
+                        f"{loc}: no hkn_structure on tier and no rate-level default"
+                    )
+                    continue
                 if struct == "additive_optin":
                     if rp is None and not cases:
                         failures.append(
                             f"{loc}: hkn_structure=additive_optin but neither "
-                            f"hkn_rp_kwh nor hkn_cases set"
+                            f"hkn_rp_kwh nor hkn_cases set (and no rate-level default)"
                         )
                 elif struct in ("bundled", "none"):
                     if rp is not None:
@@ -640,6 +682,23 @@ def case_24_nr_elcom_unique_across_utilities():
         raise AssertionError("24 nr_elcom uniqueness:\n  - " + "\n  - ".join(failures))
 
 
+def case_25_no_legacy_cap_mode():
+    """v1.5.0 hard-drops `cap_mode` from the schema. Lint against
+    re-introduction in tariffs.json — cap activation is now inferred
+    from `cap_rules` (null/[] ⇒ no cap, non-empty ⇒ cap active)."""
+    failures = []
+    for util_key, util in DATA["utilities"].items():
+        for r_idx, rate in enumerate(util.get("rates", [])):
+            if "cap_mode" in rate:
+                failures.append(
+                    f"{util_key}.rates[{r_idx}] carries legacy 'cap_mode' field"
+                )
+    if failures:
+        raise AssertionError(
+            "25 no legacy cap_mode:\n  - " + "\n  - ".join(failures)
+        )
+
+
 CASES = [
     case_01_hkn_cases_well_formed,
     case_02_hkn_cases_negative_rp_kwh,
@@ -665,6 +724,7 @@ CASES = [
     case_22_hkn_structure_consistency,
     case_23_user_input_default_in_values,
     case_24_nr_elcom_unique_across_utilities,
+    case_25_no_legacy_cap_mode,
 ]
 
 
