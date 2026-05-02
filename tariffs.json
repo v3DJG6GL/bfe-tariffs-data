@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/v3DJG6GL/bfe-tariffs-data/main/schemas/tariffs-v1.schema.json",
   "schema_version": "1.4.0",
-  "data_version": "0.0.4",
-  "last_updated": "2026-05-01",
+  "data_version": "0.0.5",
+  "last_updated": "2026-05-02",
   "notes": "Bundled fallback. Source-of-truth (companion repo) lands in Phase 6. Schema 1.1.0 (Batch D) introduces user_inputs[] for parallel tariff variants (replaces the AEW two-entry hack), power_tier.hkn_cases[] for conditional HKN values, and bonuses[].kind/when for additive vs. multiplicative bonuses.",
   "federal_minimum": [
     {
@@ -350,6 +350,45 @@
       "name_fr": "EKZ (Centrales électriques du canton de Zurich)",
       "homepage": "https://www.ekz.ch",
       "rates": [
+        {
+          "valid_from": "2025-01-01",
+          "valid_to": "2026-01-01",
+          "settlement_period": "quartal",
+          "tarif_urls": [
+            {
+              "url": "https://www.ekz.ch/de/privatkunden/solaranlage/gut-zu-wissen/rueckliefertarife.html"
+            },
+            {
+              "url": "https://www.ekz.ch/dam/ekz/privatkunden/strom/tarife-und-agb/Tarifdokumente/tarife-2025/ekz-rueckliefertarife-2025.pdf"
+            }
+          ],
+          "power_tiers": [
+            {
+              "kw_min": 0.0,
+              "kw_max": 3000.0,
+              "base_model": "fixed_ht_nt",
+              "fixed_ht_rp_kwh": 12.6,
+              "fixed_nt_rp_kwh": 11.6,
+              "ht_window": {
+                "mofr": [
+                  7,
+                  20
+                ],
+                "sa": null,
+                "su": null
+              },
+              "hkn_rp_kwh": 3.0,
+              "hkn_structure": "additive_optin"
+            }
+          ],
+          "user_inputs": [],
+          "price_floor_rp_kwh": null,
+          "notes": [],
+          "bonuses": [],
+          "seasonal": null,
+          "cap_mode": false,
+          "cap_rules": null
+        },
         {
           "valid_from": "2026-01-01",
           "valid_to": null,
