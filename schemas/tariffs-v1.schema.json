@@ -244,6 +244,32 @@
           "comment": "fixed_seasonal requires tier-level seasonal block (summer/winter rp_kwh authoritative).",
           "if":   { "properties": { "base_model": { "const": "fixed_seasonal" } }, "required": ["base_model"] },
           "then": { "required": ["seasonal"] }
+        },
+        {
+          "comment": "Inverse: tier-level seasonal block only valid with base_model=fixed_seasonal.",
+          "if":   { "properties": { "base_model": { "not": { "const": "fixed_seasonal" } } }, "required": ["base_model"] },
+          "then": { "properties": { "seasonal": { "type": "null" } } }
+        },
+        {
+          "comment": "Inverse: ht_window / fixed_ht_rp_kwh / fixed_nt_rp_kwh only valid with base_model=fixed_ht_nt.",
+          "if":   { "properties": { "base_model": { "not": { "const": "fixed_ht_nt" } } }, "required": ["base_model"] },
+          "then": {
+            "properties": {
+              "ht_window":       { "type": "null" },
+              "fixed_ht_rp_kwh": { "type": "null" },
+              "fixed_nt_rp_kwh": { "type": "null" }
+            }
+          }
+        },
+        {
+          "comment": "Inverse: fixed_rp_kwh only valid with base_model=fixed_flat.",
+          "if":   { "properties": { "base_model": { "not": { "const": "fixed_flat" } } }, "required": ["base_model"] },
+          "then": { "properties": { "fixed_rp_kwh": { "type": "null" } } }
+        },
+        {
+          "comment": "HKN tier coherence: hkn_rp_kwh must be null when hkn_structure=none.",
+          "if":   { "properties": { "hkn_structure": { "const": "none" } }, "required": ["hkn_structure"] },
+          "then": { "properties": { "hkn_rp_kwh": { "type": "null" } } }
         }
       ]
     },
