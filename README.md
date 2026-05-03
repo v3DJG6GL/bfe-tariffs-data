@@ -53,4 +53,4 @@ violation). Manual refresh: `bfe_rueckliefertarif.refresh_tariffs` service.
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+AGPL
